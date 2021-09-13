@@ -1,6 +1,5 @@
 package Utils;
 
-
 import com.hankcs.hanlp.seg.common.Term;
 import com.hankcs.hanlp.tokenizer.StandardTokenizer;
 
@@ -15,10 +14,12 @@ public class SimHashUtils {
      * @param bytes 字节数组
      * @return 二进制字符串
      */
-    private static String bytesToBinString(byte[] bytes) {
+    public static String bytesToBinString(byte[] bytes) {
+        //采用线程安全的StringBuilder
         StringBuilder sb = new StringBuilder();
         for (byte aByte : bytes) {
             String bin = Integer.toBinaryString(0xFF & aByte);
+            //根据进制转换的规则拼接0和1
             if (bin.length() == 1) {
                 sb.append('0');
             }
@@ -33,15 +34,16 @@ public class SimHashUtils {
      * @return hash
      */
     public static String hashKeyForDisk(String key) {
-        String cacheKey;
+        String hashKey;
         try {
+            //通过MD5加密，输出哈希值
             final MessageDigest mDigest = MessageDigest.getInstance("MD5");
             mDigest.update(key.getBytes());
-            cacheKey = bytesToBinString(mDigest.digest());
+            hashKey = bytesToBinString(mDigest.digest());
         } catch (NoSuchAlgorithmException e) {
-            cacheKey = String.valueOf(key.hashCode());
+            hashKey = String.valueOf(key.hashCode());
         }
-        return cacheKey;
+        return hashKey;
     }
 
     /**
@@ -51,12 +53,15 @@ public class SimHashUtils {
      */
     public static String getSimHash(String str) {
         int i=0;
+        //用于存放哈希值，最高128位
         int[] vector = new int[128];
         //1.分词
         List<Term> termList = StandardTokenizer.segment(str);
         int size = termList.size();
         //2.获取Hash值
         for (Term term : termList) {
+            //采用包HanLP的处理方法
+            //从每个term对象中取出word属性，拼接为字符串
             StringBuilder hashRate = new StringBuilder(hashKeyForDisk(term.word));
             if (hashRate.length() < 128) {
                 // hash值可能少于128位，在低位以0补齐
