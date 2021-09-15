@@ -1,5 +1,6 @@
 package Utils;
 
+import com.hankcs.hanlp.corpus.tag.Nature;
 import com.hankcs.hanlp.seg.common.Term;
 import com.hankcs.hanlp.tokenizer.StandardTokenizer;
 
@@ -33,7 +34,7 @@ public class SimHashUtils {
      * @param key 输入字符串
      * @return hash
      */
-    public static String hashKeyForDisk(String key) {
+    public static String hashKeyForDisk(String key){
         String hashKey;
         try {
             //通过MD5加密，输出哈希值
@@ -62,6 +63,10 @@ public class SimHashUtils {
         for (Term term : termList) {
             //采用包HanLP的处理方法
             //从每个term对象中取出word属性，拼接为字符串
+            //去除标点符号
+            if(Nature.w.equals(term.nature)){
+                continue;
+            }
             StringBuilder hashRate = new StringBuilder(hashKeyForDisk(term.word));
             if (hashRate.length() < 128) {
                 // hash值可能少于128位，在低位以0补齐
@@ -71,15 +76,21 @@ public class SimHashUtils {
                 }
             }
             // 3、加权与合并
-            for (int j = 0; j < vector.length; j++) {
-                // 对keywordHash的每一位与'1'进行比较
-                if (hashRate.charAt(j) == '1') {
-                    //权重分10级，由词频从高到低，取权重10~0
-                    vector[j] += (10 - (i / (size / 10)));
-                } else {
-                    vector[j] -= (10 - (i / (size / 10)));
+            // 对keywordHash的每一位与'1'进行比较
+                //若读入的文本过短则无法加权合并，抛出异常
+                try{
+                    for (int j = 0; j < vector.length; j++) {
+                        if (hashRate.charAt(j) == '1') {
+                            //权重分10级，由词频从高到低，取权重10~0
+                            vector[j] += (10 - (i / (size / 10)));
+                        } else {
+                            vector[j] -= (10 - (i / (size / 10)));
+                        }
+                    }
+                }catch (ArithmeticException e){
+                    e.printStackTrace();
                 }
-            }
+
             i++;
         }
             // 4、降维

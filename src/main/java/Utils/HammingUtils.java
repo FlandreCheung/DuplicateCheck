@@ -27,6 +27,7 @@ public class HammingUtils {
      */
     public static double getSimilarity(String simHash1,String simHash2){
         double distance = getHammingDistance(simHash1,simHash2);
+        System.out.println(0.01*(100-distance*100/128));
         return 0.01*(100-distance*100/128);
     }
 }

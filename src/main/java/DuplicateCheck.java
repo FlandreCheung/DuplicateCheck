@@ -4,8 +4,8 @@ import Utils.SimHashUtils;
 
 public class DuplicateCheck {
     public static void main(String[] args) {
-        String str1 = IOUtils.read("C:\\Users\\10920\\Desktop\\test\\orig.txt");
-        String str2 = IOUtils.read("C:\\Users\\10920\\Desktop\\test\\orig_0.8_add.txt");
+        String str1 = IOUtils.read(args[0]);
+        String str2 = IOUtils.read(args[1]);
         String outPutFileName = "result";
 
         String simHash1 = SimHashUtils.getSimHash(str1);

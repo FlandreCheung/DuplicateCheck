@@ -19,7 +19,7 @@ public class SimHashUtilsTest {
 
     @Test
     public void getSimHashTest(){
-        String test = "test simHash keytest simHash keytest simHash keytest simHash keytest simHash keytest simHash keytest simHash key";
+        String test = "懂得都懂懂得都懂懂得都懂懂得都懂懂得都懂懂得都懂懂得都懂懂得都懂懂得都懂";
         System.out.println(SimHashUtils.getSimHash(test));
     }
 }
