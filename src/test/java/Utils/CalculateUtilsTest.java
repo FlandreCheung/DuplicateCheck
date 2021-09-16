@@ -23,6 +23,9 @@ public class CalculateUtilsTest {
         System.out.println(CalculateUtils.getSimHash(test));
     }
 
+    /**
+     * 用于测试过短的字符串
+     */
     @Test
     public void invalidStringTest(){
         String test = "abc";
