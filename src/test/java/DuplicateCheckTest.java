@@ -1,6 +1,6 @@
 import Utils.HammingUtils;
 import Utils.IOUtils;
-import Utils.SimHashUtils;
+import Utils.CalculateUtils;
 import org.junit.Test;
 
 public class DuplicateCheckTest {
@@ -17,7 +17,7 @@ public class DuplicateCheckTest {
         String resultPath = "C:\\Users\\10920\\Desktop\\test\\result.txt";
 
         for(int i=0;i<5;i++){
-            double res = HammingUtils.getSimilarity(SimHashUtils.getSimHash(originFile), SimHashUtils.getSimHash(copyFile[i]));
+            double res = HammingUtils.getSimilarity(CalculateUtils.getSimHash(originFile), CalculateUtils.getSimHash(copyFile[i]));
             IOUtils.write(res,resultPath);
         }
 

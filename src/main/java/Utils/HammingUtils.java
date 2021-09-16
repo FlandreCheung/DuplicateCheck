@@ -11,6 +11,7 @@ public class HammingUtils {
     public static int getHammingDistance(String simHash1,String simHash2){
         int distance = 0;
 
+        //逐位比较，如果当前位上两个字符串的SimHash值不相同，则汉明距离+1
         for(int i=0;i<simHash1.length();i++){
             if(simHash1.charAt(i)!=simHash2.charAt(i)){
                 distance++;
@@ -27,7 +28,7 @@ public class HammingUtils {
      */
     public static double getSimilarity(String simHash1,String simHash2){
         double distance = getHammingDistance(simHash1,simHash2);
-        System.out.println(0.01*(100-distance*100/128));
+        //由于Hash值取128位，故除以128
         return 0.01*(100-distance*100/128);
     }
 }

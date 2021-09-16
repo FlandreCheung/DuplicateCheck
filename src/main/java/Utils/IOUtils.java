@@ -18,6 +18,7 @@ public class IOUtils {
         FileInputStream fileInputStream;
 
         try{
+            //读入文件
             fileInputStream = new FileInputStream(file);
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -26,6 +27,7 @@ public class IOUtils {
             while ((readLine = bufferedReader.readLine())!= null){
                 str.append(readLine);
             }
+            //关闭资源
             inputStreamReader.close();
             bufferedReader.close();
             fileInputStream.close();

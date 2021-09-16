@@ -8,7 +8,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-public class SimHashUtils {
+public class CalculateUtils {
 
     /**
      * 将字节数组转换为二进制字符串
